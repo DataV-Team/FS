@@ -276,7 +276,7 @@ async function copyDir (src, dest) {
     }
 
     if (stats.isFile()) {
-      fs.createReadStream(fullSrc).pipe(fs.createWriteStream(fullTarget))
+      fs.createReadStream(fullSrc).pipe(fs.createWriteStream(fullDest))
     } else if (stats.isDirectory()) {
       const isMkdir = await mkDir(fullDest)
 
