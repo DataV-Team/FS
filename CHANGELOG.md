@@ -1,3 +1,9 @@
+# 0.0.1-alpha (2019-07-09)
+
+### Bug Fixes
+
+- **Entry:** Incorrect entry file setting.
+
 # 0.0.0-alpha (2019-07-09)
 
 ### Release
