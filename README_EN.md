@@ -11,7 +11,7 @@
     </a>
 </p>
 
-### Encapsulating some common file system methods with Promise (based Node.js - fs):
+### Encapsulating some common file system methods with Promise (based Node.js - fs)
 
 - **[stat](#stat)**
 

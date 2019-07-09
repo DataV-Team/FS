@@ -11,7 +11,7 @@
     </a>
 </p>
 
-### 使用Promise封装了一些常用的文件系统方法（基于Node.js的fs文件系统）：
+### 使用Promise封装了一些常用的文件系统方法（基于Node.js的fs文件系统）
 
 - **[stat](#stat)**
 
