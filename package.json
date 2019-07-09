@@ -1,9 +1,9 @@
 {
   "name": "@jiaminghi/fs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "JiaMing <743192023@qq.com>",
   "description": "Promise fs based on node.js fs",
-  "main": "/src/index.js",
+  "main": "./src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jiaming743/DataV.git"
