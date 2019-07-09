@@ -47,7 +47,7 @@
 
 - **[dirForEach](#dirForEach)**
 
-  Recursively traverse all folders.
+  Traverse all folders.
 
 - **[fileForEach](#fileForEach)**
 
@@ -191,7 +191,7 @@ async function writeFile (src, data, option = 'utf8') {
 
 ```javascript
 /**
- * @description Recursively traverse all folders.
+ * @description Traverse all folders.
  * @param {String} src       Folder path
  * @param {Funtion} callback Callback
  * @return {Promise} Promise

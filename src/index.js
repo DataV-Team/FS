@@ -387,7 +387,7 @@ async function writeFile (src, data, option = 'utf8') {
 }
 
 /**
- * @description Recursively traverse all folders.
+ * @description Traverse all folders.
  * @param {String} src       Folder path
  * @param {Funtion} callback Callback
  * @return {Promise} Promise

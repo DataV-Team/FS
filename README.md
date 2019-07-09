@@ -47,7 +47,7 @@
 
 - **[dirForEach](#dirForEach)**
 
-  递归遍历文件夹
+  遍历文件夹
 
 - **[fileForEach](#fileForEach)**
 
@@ -190,7 +190,7 @@ async function writeFile (src, data, option = 'utf8') {
 
 ```javascript
 /**
- * @description 递归遍历文件夹.
+ * @description 遍历文件夹.
  * @param {String} src       Folder path
  * @param {Funtion} callback Callback
  * @return {Promise} Promise
