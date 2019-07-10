@@ -21,6 +21,10 @@
 
   创建文件夹
 
+- **[access](#access)**
+
+  连接文件
+
 - **[copyDir](#copyDir)**
 
   复制文件夹到指定位置，若文件夹已存在将被清空后进行复制操作
@@ -98,6 +102,20 @@ function stat (path, options = {}) {
  * @return {Promise} Promise
  */
 function mkDir (path, options = {}) {
+  // ...
+}
+```
+
+#### access
+
+```javascript
+/**
+ * @description Promise fs.access
+ * @param {String|Buffer|URL} path Path
+ * @param {Number} mode            Mode
+ * @return {Promise} Promise will return a Boolean value
+ */
+function access (path, mode = fs.constants.F_OK) {
   // ...
 }
 ```
