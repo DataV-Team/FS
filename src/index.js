@@ -63,8 +63,8 @@ function mkDir (path, options = {}) {
 /**
  * @description Promise fs.access
  * @param {String|Buffer|URL} path Path
- * @param {Number} mode Mode
- * @return {Promise} Promise
+ * @param {Number} mode            Mode
+ * @return {Promise} Promise will return a Boolean value
  */
 function access (path, mode = fs.constants.F_OK) {
   return new Promise(resolve => {
@@ -425,6 +425,7 @@ async function dirForEach (src, callback) {
 module.exports = {
   stat,
   mkDir,
+  access,
   copyDir,
   readDir,
   clearDir,
