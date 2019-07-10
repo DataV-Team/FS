@@ -1,3 +1,9 @@
+# 0.0.2-alpha (2019-07-10)
+
+### New
+
+- **access:** Promise fs.access.
+
 # 0.0.1-alpha (2019-07-09)
 
 ### Bug Fixes
