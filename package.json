@@ -1,14 +1,28 @@
 {
   "name": "@jiaminghi/fs",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "JiaMing <743192023@qq.com>",
   "description": "Promise fs based on node.js fs",
-  "main": "./src/index.js",
+  "main": "./lib/index.js",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/jiaming743/DataV.git"
   },
   "scripts": {
+    "clean": "rimraf lib dist es types",
+    "type:check": "tsc --noEmit",
+    "lint": "eslint --ext js,ts src",
+    "format:check": "prettier --check .",
+    "format": "prettier --write .",
+    "check": "npm run type:check && npm run lint && npm run format:check",
+    "build": "tsc"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run check",
+      "pre-push": "npm run check"
+    }
   },
   "license": "MIT",
   "bugs": {
@@ -19,7 +33,15 @@
     "node",
     "promise"
   ],
-  "dependencies": {
-  },
-  "homepage": "https://github.com/jiaming743/fs#readme"
+  "dependencies": {},
+  "homepage": "https://github.com/jiaming743/fs#readme",
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "typescript": "^3.8.3"
+  }
 }

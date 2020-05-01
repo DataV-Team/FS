@@ -11,7 +11,7 @@
     </a>
 </p>
 
-### 使用Promise封装了一些常用的文件系统方法（基于Node.js的fs文件系统）
+### 使用 Promise 封装了一些常用的文件系统方法（基于 Node.js 的 fs 文件系统）
 
 - **[stat](#stat)**
 
@@ -59,9 +59,9 @@
 
 - **[unlinkDirFileByExtname](#unlinkDirFileByExtname)**
 
-  递归删除指定extname的文件
+  递归删除指定 extname 的文件
 
-### npm安装
+### npm 安装
 
 ```shell
 $ npm install @jiaminghi/fs
@@ -75,7 +75,6 @@ import { readFile } from '@jiaminghi/fs'
 // do something
 ```
 
-
 <h3 align="center">示例</h3>
 
 #### stat
@@ -87,7 +86,7 @@ import { readFile } from '@jiaminghi/fs'
  * @param {Object} options         Options
  * @return {Promise} Promise
  */
-function stat (path, options = {}) {
+function stat(path, options = {}) {
   // ...
 }
 ```
@@ -101,7 +100,7 @@ function stat (path, options = {}) {
  * @param {Object} options         Options
  * @return {Promise} Promise
  */
-function mkDir (path, options = {}) {
+function mkDir(path, options = {}) {
   // ...
 }
 ```
@@ -115,7 +114,7 @@ function mkDir (path, options = {}) {
  * @param {Number} mode            Mode
  * @return {Promise} Promise will return a Boolean value
  */
-function access (path, mode = fs.constants.F_OK) {
+function access(path, mode = fs.constants.F_OK) {
   // ...
 }
 ```
@@ -130,7 +129,7 @@ function access (path, mode = fs.constants.F_OK) {
  * @param {String} dest Destination folder path
  * @return {Promise} Promise将返回一个布尔值
  */
-async function copyDir (src, dest) {
+async function copyDir(src, dest) {
   // ...
 }
 ```
@@ -143,7 +142,7 @@ async function copyDir (src, dest) {
  * @param {String|Buffer|URL|FileHandle} path Path
  * @return {Promise} Promise
  */
-function readDir (path) {
+function readDir(path) {
   // ...
 }
 ```
@@ -157,7 +156,7 @@ function readDir (path) {
  * @param {String} src Folder path
  * @return {Promise} Promise将返回一个布尔值
  */
-async function clearDir (src) {
+async function clearDir(src) {
   // ...
 }
 ```
@@ -170,7 +169,7 @@ async function clearDir (src) {
  * @param {String} src Folder path
  * @return {Promise} Promise将返回一个布尔值
  */
-async function emptyDir (src) {
+async function emptyDir(src) {
   // ...
 }
 ```
@@ -184,7 +183,7 @@ async function emptyDir (src) {
  * @param {Object|String} options          Options
  * @return {Promise} Promise
  */
-async function readFile (path, options = 'utf8') {
+async function readFile(path, options = 'utf8') {
   // ...
 }
 ```
@@ -199,7 +198,7 @@ async function readFile (path, options = 'utf8') {
  * @param {Object|String} options                  Options
  * @return {Promise} Promise将返回一个布尔值
  */
-async function writeFile (src, data, option = 'utf8') {
+async function writeFile(src, data, option = 'utf8') {
   // ...
 }
 ```
@@ -213,7 +212,7 @@ async function writeFile (src, data, option = 'utf8') {
  * @param {Funtion} callback Callback
  * @return {Promise} Promise
  */
-async function dirForEach (src, callback) {
+async function dirForEach(src, callback) {
   // ...
 }
 ```
@@ -227,7 +226,7 @@ async function dirForEach (src, callback) {
  * @param {Funtion} callback Callback
  * @return {Promise} Promise
  */
-async function fileForEach (src, callback) {
+async function fileForEach(src, callback) {
   // ...
 }
 ```
@@ -241,7 +240,7 @@ async function fileForEach (src, callback) {
  * @param {Array<String>} extnames Extnames
  * @return {Promise} Promise将返回一个布尔值
  */
-async function unlinkDirFileByExtname (src, extnames = []) {
+async function unlinkDirFileByExtname(src, extnames = []) {
   // ...
 }
 ```
