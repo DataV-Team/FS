@@ -79,169 +79,82 @@ import { readFile } from '@jiaminghi/fs'
 
 #### stat
 
-```javascript
-/**
- * @description Promise fs.stat
- * @param {String|Buffer|URL} path Path
- * @param {Object} options         Options
- * @return {Promise} Promise
- */
-function stat(path, options = {}) {
-  // ...
-}
+```typescript
+type stat = (
+  path: fs.PathLike,
+  options: fs.StatOptions = { bigint: false }
+) => Promise<fs.Stats | fs.BigIntStats | false>
 ```
 
 #### mkDir
 
-```javascript
-/**
- * @description Promise fs.mkdir
- * @param {String|Buffer|URL} path Path
- * @param {Object} options         Options
- * @return {Promise} Promise
- */
-function mkDir(path, options = {}) {
-  // ...
-}
+```typescript
+type mkDir = (path: fs.PathLike, options: fs.MakeDirectoryOptions = {}) => Promise<boolean>
 ```
 
 #### access
 
-```javascript
-/**
- * @description Promise fs.access
- * @param {String|Buffer|URL} path Path
- * @param {Number} mode            Mode
- * @return {Promise} Promise will return a Boolean value
- */
-function access(path, mode = fs.constants.F_OK) {
-  // ...
-}
+```typescript
+type access = (path: fs.PathLike, mode = fs.constants.F_OK) => Promise<boolean>
 ```
 
 #### copyDir
 
-```javascript
-/**
- * @description Copy the folder to the specified location.
- * If the folder already exists in the specified location,
- * the folder will be cleared.
- * @param {String} src  Folder path
- * @param {String} dest Destination folder path
- * @return {Promise} Promise will return a Boolean value
- */
-async function copyDir(src, dest) {
-  // ...
-}
+```typescript
+type copyDir = (path: fs.PathLike, dest: string) => Promise<boolean>
 ```
 
 #### readDir
 
-```javascript
-/**
- * @description Promise fs.readdir
- * @param {String|Buffer|URL|FileHandle} path Path
- * @return {Promise} Promise
- */
-function readDir(path) {
-  // ...
-}
+```typescript
+type readDir = (path: fs.PathLike) => Promise<string[] | false>
 ```
 
 #### clearDir
 
-```javascript
-/**
- * @description Recursively empty the folder,
- * the folder will be created if it does not exist.
- * @param {String} src Folder path
- * @return {Promise} Promise will return a Boolean value
- */
-async function clearDir(src) {
-  // ...
-}
+```typescript
+type clearDir = (path: fs.PathLike) => Promise<boolean>
 ```
 
 #### emptyDir
 
-```javascript
-/**
- * @description Recursively empty the folder.
- * @param {String} src Folder path
- * @return {Promise} Promise will return a Boolean value
- */
-async function emptyDir(src) {
-  // ...
-}
+```typescript
+type emptyDir = (path: fs.PathLike) => Promise<boolean>
 ```
 
 #### readFile
 
-```javascript
-/**
- * @description fs.readFile
- * @param {String|Buffer|URL|Integer} path File path
- * @param {Object|String} options          Options
- * @return {Promise} Promise
- */
-async function readFile(path, options = 'utf8') {
-  // ...
-}
+```typescript
+type readFile = (
+  path: fs.PathLike,
+  options: { encoding: string; flag?: string } = { encoding: 'utf8' }
+) => Promise<string | false>
 ```
 
 #### writeFile
 
-```javascript
-/**
- * @description fs.writeFile
- * @param {String|Buffer|URL|Integer} path         File path
- * @param {String|Buffer|TypedArray|DataView} data Data
- * @param {Object|String} options                  Options
- * @return {Promise} Promise will return a Boolean value
- */
-async function writeFile(src, data, option = 'utf8') {
-  // ...
-}
+```typescript
+type writeFile = (
+  path: fs.PathLike,
+  data: any,
+  option: fs.WriteFileOptions = 'utf8'
+) => Promise<boolean>
 ```
 
 #### dirForEach
 
-```javascript
-/**
- * @description Traverse all folders.
- * @param {String} src       Folder path
- * @param {Funtion} callback Callback
- * @return {Promise} Promise
- */
-async function dirForEach(src, callback) {
-  // ...
-}
+```typescript
+type dirForEach = (path: fs.PathLike, callback: (path: string) => any) => Promise<boolean>
 ```
 
 #### fileForEach
 
-```javascript
-/**
- * @description Recursively traverse all files.
- * @param {String} src       Folder path
- * @param {Funtion} callback Callback
- * @return {Promise} Promise
- */
-async function fileForEach(src, callback) {
-  // ...
-}
+```typescript
+type fileForEach = (path: fs.PathLike, callback: (path: string) => any) => Promise<boolean>
 ```
 
 #### unlinkDirFileByExtname
 
-```javascript
-/**
- * @description Delete the specified extname file.
- * @param {String} src             Folder path
- * @param {Array<String>} extnames Extnames
- * @return {Promise} Promise will return a Boolean value
- */
-async function unlinkDirFileByExtname(src, extnames = []) {
-  // ...
-}
+```typescript
+type unlinkDirFileByExtname = (path: fs.PathLike, extnames: string[] = []) => Promise<boolean>
 ```

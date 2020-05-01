@@ -79,168 +79,82 @@ import { readFile } from '@jiaminghi/fs'
 
 #### stat
 
-```javascript
-/**
- * @description Promise fs.stat
- * @param {String|Buffer|URL} path Path
- * @param {Object} options         Options
- * @return {Promise} Promise
- */
-function stat(path, options = {}) {
-  // ...
-}
+```typescript
+type stat = (
+  path: fs.PathLike,
+  options: fs.StatOptions = { bigint: false }
+) => Promise<fs.Stats | fs.BigIntStats | false>
 ```
 
 #### mkDir
 
-```javascript
-/**
- * @description Promise fs.mkdir
- * @param {String|Buffer|URL} path Path
- * @param {Object} options         Options
- * @return {Promise} Promise
- */
-function mkDir(path, options = {}) {
-  // ...
-}
+```typescript
+type mkDir = (path: fs.PathLike, options: fs.MakeDirectoryOptions = {}) => Promise<boolean>
 ```
 
 #### access
 
-```javascript
-/**
- * @description Promise fs.access
- * @param {String|Buffer|URL} path Path
- * @param {Number} mode            Mode
- * @return {Promise} Promise will return a Boolean value
- */
-function access(path, mode = fs.constants.F_OK) {
-  // ...
-}
+```typescript
+type access = (path: fs.PathLike, mode = fs.constants.F_OK) => Promise<boolean>
 ```
 
 #### copyDir
 
-```javascript
-/**
- * @description 复制文件夹到指定位置，
- * 如果文件夹已经存在，文件夹将被清空后进行复制操作
- * @param {String} src  Folder path
- * @param {String} dest Destination folder path
- * @return {Promise} Promise将返回一个布尔值
- */
-async function copyDir(src, dest) {
-  // ...
-}
+```typescript
+type copyDir = (path: fs.PathLike, dest: string) => Promise<boolean>
 ```
 
 #### readDir
 
-```javascript
-/**
- * @description Promise fs.readdir
- * @param {String|Buffer|URL|FileHandle} path Path
- * @return {Promise} Promise
- */
-function readDir(path) {
-  // ...
-}
+```typescript
+type readDir = (path: fs.PathLike) => Promise<string[] | false>
 ```
 
 #### clearDir
 
-```javascript
-/**
- * @description 递归清空文件夹,
- * 如果文件夹不存在，它将被自动创建.
- * @param {String} src Folder path
- * @return {Promise} Promise将返回一个布尔值
- */
-async function clearDir(src) {
-  // ...
-}
+```typescript
+type clearDir = (path: fs.PathLike) => Promise<boolean>
 ```
 
 #### emptyDir
 
-```javascript
-/**
- * @description 递归清空文件夹
- * @param {String} src Folder path
- * @return {Promise} Promise将返回一个布尔值
- */
-async function emptyDir(src) {
-  // ...
-}
+```typescript
+type emptyDir = (path: fs.PathLike) => Promise<boolean>
 ```
 
 #### readFile
 
-```javascript
-/**
- * @description fs.readFile
- * @param {String|Buffer|URL|Integer} path File path
- * @param {Object|String} options          Options
- * @return {Promise} Promise
- */
-async function readFile(path, options = 'utf8') {
-  // ...
-}
+```typescript
+type readFile = (
+  path: fs.PathLike,
+  options: { encoding: string; flag?: string } = { encoding: 'utf8' }
+) => Promise<string | false>
 ```
 
 #### writeFile
 
-```javascript
-/**
- * @description fs.writeFile
- * @param {String|Buffer|URL|Integer} path         File path
- * @param {String|Buffer|TypedArray|DataView} data Data
- * @param {Object|String} options                  Options
- * @return {Promise} Promise将返回一个布尔值
- */
-async function writeFile(src, data, option = 'utf8') {
-  // ...
-}
+```typescript
+type writeFile = (
+  path: fs.PathLike,
+  data: any,
+  option: fs.WriteFileOptions = 'utf8'
+) => Promise<boolean>
 ```
 
 #### dirForEach
 
-```javascript
-/**
- * @description 遍历文件夹.
- * @param {String} src       Folder path
- * @param {Funtion} callback Callback
- * @return {Promise} Promise
- */
-async function dirForEach(src, callback) {
-  // ...
-}
+```typescript
+type dirForEach = (path: fs.PathLike, callback: (path: string) => any) => Promise<boolean>
 ```
 
 #### fileForEach
 
-```javascript
-/**
- * @description 递归遍历文件.
- * @param {String} src       Folder path
- * @param {Funtion} callback Callback
- * @return {Promise} Promise
- */
-async function fileForEach(src, callback) {
-  // ...
-}
+```typescript
+type fileForEach = (path: fs.PathLike, callback: (path: string) => any) => Promise<boolean>
 ```
 
 #### unlinkDirFileByExtname
 
-```javascript
-/**
- * @description 删除指定extname的文件.
- * @param {String} src             Folder path
- * @param {Array<String>} extnames Extnames
- * @return {Promise} Promise将返回一个布尔值
- */
-async function unlinkDirFileByExtname(src, extnames = []) {
-  // ...
-}
+```typescript
+type unlinkDirFileByExtname = (path: fs.PathLike, extnames: string[] = []) => Promise<boolean>
 ```
