@@ -17,14 +17,14 @@ declare function mkDir(path: fs.PathLike, options?: fs.MakeDirectoryOptions): Pr
  */
 declare function access(path: fs.PathLike, mode?: number): Promise<boolean>;
 /**
+ * @description Recursively empty the folder.
+ */
+declare function emptyDir(path: fs.PathLike): Promise<boolean>;
+/**
  * @description Recursively empty the folder,
  * the folder will be created if it does not exist.
  */
 declare function clearDir(path: fs.PathLike): Promise<boolean>;
-/**
- * @description Recursively empty the folder.
- */
-declare function emptyDir(path: fs.PathLike): Promise<boolean>;
 /**
  * @description Delete the specified extname file.
  */

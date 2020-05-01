@@ -10,13 +10,14 @@
     "url": "https://github.com/jiaming743/DataV.git"
   },
   "scripts": {
-    "clean": "rimraf lib dist es types",
+    "clean": "rimraf lib types",
     "type:check": "tsc --noEmit",
     "lint": "eslint --ext js,ts src",
     "format:check": "prettier --check .",
     "format": "prettier --write .",
     "check": "npm run type:check && npm run lint && npm run format:check",
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run clean && npm run check && npm run build"
   },
   "husky": {
     "hooks": {
@@ -42,6 +43,7 @@
     "eslint": "^6.8.0",
     "husky": "^4.2.5",
     "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   }
 }
