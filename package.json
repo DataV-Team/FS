@@ -7,7 +7,7 @@
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jiaming743/DataV.git"
+    "url": "https://github.com/jiaming743/fs.git"
   },
   "scripts": {
     "clean": "rimraf lib types",
