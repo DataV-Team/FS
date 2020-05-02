@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "author": "JiaMing <743192023@qq.com>",
   "description": "Promise fs based on node.js fs",
-  "main": "./lib/index.js",
+  "main": "lib/index.js",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
