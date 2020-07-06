@@ -1,21 +1,17 @@
 import * as fs from 'fs'
-import * as path from 'path'
-
-const _path = path
+import * as _path from 'path'
 
 /**
  * @description Promise fs.readdir
  */
-function readDir(path: fs.PathLike): Promise<string[] | false> {
-  return new Promise(resolve => {
+function readDir(path: fs.PathLike): Promise<string[]> {
+  return new Promise((resolve, reject) => {
     fs.readdir(path, (err, paths) => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
+      } else {
+        resolve(paths)
       }
-
-      resolve(paths)
     })
   })
 }
@@ -26,16 +22,14 @@ function readDir(path: fs.PathLike): Promise<string[] | false> {
 function stat(
   path: fs.PathLike,
   options: fs.StatOptions = { bigint: false }
-): Promise<fs.Stats | fs.BigIntStats | false> {
-  return new Promise(resolve => {
+): Promise<fs.Stats | fs.BigIntStats> {
+  return new Promise((resolve, reject) => {
     fs.stat(path, options, (err, stats) => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
+      } else {
+        resolve(stats)
       }
-
-      resolve(stats)
     })
   })
 }
@@ -43,16 +37,14 @@ function stat(
 /**
  * @description Promise fs.mkdir
  */
-function mkDir(path: fs.PathLike, options: fs.MakeDirectoryOptions = {}): Promise<boolean> {
-  return new Promise(resolve => {
+function mkDir(path: fs.PathLike, options: fs.MakeDirectoryOptions = {}): Promise<true> {
+  return new Promise((resolve, reject) => {
     fs.mkdir(path, options, err => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
+      } else {
+        resolve(true)
       }
-
-      resolve(true)
     })
   })
 }
@@ -60,16 +52,14 @@ function mkDir(path: fs.PathLike, options: fs.MakeDirectoryOptions = {}): Promis
 /**
  * @description Promise fs.access
  */
-function access(path: fs.PathLike, mode = fs.constants.F_OK): Promise<boolean> {
-  return new Promise(resolve => {
+function access(path: fs.PathLike, mode = fs.constants.F_OK): Promise<true> {
+  return new Promise((resolve, reject) => {
     fs.access(path, mode, err => {
       if (err) {
-        resolve(false)
-
-        return
+        reject(err)
+      } else {
+        resolve(true)
       }
-
-      resolve(true)
     })
   })
 }
@@ -77,16 +67,14 @@ function access(path: fs.PathLike, mode = fs.constants.F_OK): Promise<boolean> {
 /**
  * @description Promise fs.unlink
  */
-function unlink(path: fs.PathLike): Promise<boolean> {
-  return new Promise(resolve => {
+function unlink(path: fs.PathLike): Promise<true> {
+  return new Promise((resolve, reject) => {
     fs.unlink(path, err => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
+      } else {
+        resolve(true)
       }
-
-      resolve(true)
     })
   })
 }
@@ -94,13 +82,11 @@ function unlink(path: fs.PathLike): Promise<boolean> {
 /**
  * @description Promise fs.rmdir
  */
-function rmDir(path: fs.PathLike): Promise<boolean> {
-  return new Promise(resolve => {
+function rmDir(path: fs.PathLike): Promise<true> {
+  return new Promise((resolve, reject) => {
     fs.rmdir(path, err => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
       } else {
         resolve(true)
       }
@@ -111,47 +97,19 @@ function rmDir(path: fs.PathLike): Promise<boolean> {
 /**
  * @description Recursively empty the folder.
  */
-async function emptyDir(path: fs.PathLike): Promise<boolean> {
+async function emptyDir(path: fs.PathLike): Promise<true> {
   const paths = await readDir(path)
-
-  if (!paths) {
-    console.error('Exception in emptyDir: paths!')
-
-    return false
-  }
 
   for (let i = 0; i < paths.length; i++) {
     const fullPath = path + '/' + paths[i]
     const stats = await stat(fullPath)
 
-    if (!stats) {
-      console.error('Exception in emptyDir: stats!')
-
-      return false
-    }
-
     if (stats.isFile()) {
-      const isUnlink = await unlink(fullPath)
-
-      if (!isUnlink) {
-        console.error('Exception in emptyDir: isUnlink!')
-
-        return false
-      }
+      await unlink(fullPath)
     } else if (stats.isDirectory()) {
-      const isEmpty = await emptyDir(fullPath)
+      await emptyDir(fullPath)
 
-      if (!isEmpty) {
-        console.error('Exception in emptyDir: isEmpty!')
-
-        return false
-      }
-
-      if (!(await rmDir(fullPath))) {
-        console.error('Exception in emptyDir: rmDir!')
-
-        return false
-      }
+      await rmDir(fullPath)
     }
   }
 
@@ -162,7 +120,7 @@ async function emptyDir(path: fs.PathLike): Promise<boolean> {
  * @description Recursively empty the folder,
  * the folder will be created if it does not exist.
  */
-async function clearDir(path: fs.PathLike): Promise<boolean> {
+async function clearDir(path: fs.PathLike): Promise<true> {
   const isExists = await access(path)
 
   if (!isExists) return await mkDir(path)
@@ -173,46 +131,20 @@ async function clearDir(path: fs.PathLike): Promise<boolean> {
 /**
  * @description Delete the specified extname file.
  */
-async function unlinkDirFileByExtname(
-  path: fs.PathLike,
-  extnames: string[] = []
-): Promise<boolean> {
+async function unlinkDirFileByExtname(path: fs.PathLike, extnames: string[] = []): Promise<true> {
   const paths = await readDir(path)
-
-  if (!paths) {
-    console.error('Exception in unlinkDirFileByExtname: paths!')
-
-    return false
-  }
 
   for (let i = 0; i < paths.length; i++) {
     const fullPath = path + '/' + paths[i]
     const stats = await stat(fullPath)
 
-    if (!stats) {
-      console.error('Exception in unlinkDirFileByExtname: stats!')
-
-      return false
-    }
-
     if (stats.isFile()) {
       const cxtname = _path.extname(fullPath)
       if (extnames.findIndex(name => name === cxtname) === -1) continue
 
-      const isUnlink = await unlink(fullPath)
-      if (!isUnlink) {
-        console.error('Exception in unlinkDirFileByExtname: isUnlink!')
-
-        return false
-      }
+      await unlink(fullPath)
     } else if (stats.isDirectory()) {
-      const recursive = await unlinkDirFileByExtname(fullPath, extnames)
-
-      if (!recursive) {
-        console.error('Exception in unlinkDirFileByExtname: recursive!')
-
-        return false
-      }
+      await unlinkDirFileByExtname(fullPath, extnames)
     }
   }
 
@@ -224,101 +156,64 @@ async function unlinkDirFileByExtname(
  * If the folder already exists in the specified location,
  * the folder will be cleared.
  */
-async function copyDir(path: fs.PathLike, dest: string): Promise<boolean> {
-  if (!path || !dest) {
-    console.error('copyDir: Missing parameters!')
+async function copyDir(path: fs.PathLike, dest: string): Promise<true> {
+  if (!path || !dest) throw new Error('copyDir: Missing parameters!')
 
-    return false
-  }
-
-  const isClear = await clearDir(dest)
-
-  if (!isClear) {
-    console.error('Exception in copyDir: isClear!')
-
-    return false
-  }
-
+  await clearDir(dest)
   const paths = await readDir(path)
-  if (!paths) {
-    console.error('Exception in copyDir: paths!')
-
-    return false
-  }
 
   for (let i = 0; i < paths.length; i++) {
     const fullPath = path + '/' + paths[i]
     const fullDest = dest + '/' + paths[i]
     const stats = await stat(fullPath)
 
-    if (!stats) {
-      console.error('Exception in copyDir: stats!')
-
-      return false
-    }
-
     if (stats.isFile()) {
       fs.createReadStream(fullPath).pipe(fs.createWriteStream(fullDest))
     } else if (stats.isDirectory()) {
-      const isMkdir = await mkDir(fullDest)
+      await mkDir(fullDest)
 
-      if (!isMkdir) {
-        console.error('Exception in copyDir: isMkdir!')
-
-        return false
-      }
-
-      const isCopy = await copyDir(fullPath, fullDest)
-
-      if (!isCopy) {
-        console.error('Exception in copyDir: isCopy!')
-
-        return false
-      }
+      await copyDir(fullPath, fullDest)
     }
   }
 
   return true
 }
 
+async function copyFile(path: fs.PathLike, dest: string): Promise<void> {
+  if (!path || !dest) throw new Error('copyFile: Missing parameters!')
+
+  const stats = await stat(path)
+
+  if (!stats.isFile()) throw new Error(`${path} is not a file!`)
+
+  fs.createReadStream(path).pipe(fs.createWriteStream(dest))
+}
+
 /**
  * @description Recursively traverse all files.
  */
-// eslint-disable-next-line
-async function fileForEach(path: fs.PathLike, callback: (path: string) => any): Promise<boolean> {
-  if (!path || !callback) {
-    console.error('fileForEach missing parameters!')
+async function fileForEach(
+  path: fs.PathLike,
+  // eslint-disable-next-line
+  callback: (path: string) => any,
+  filterDir: RegExp[] = [],
+  filterFile: RegExp[] = []
+): Promise<true> {
+  if (!path || !callback) throw new Error('fileForEach missing parameters!')
 
-    return false
-  }
+  const isRegExpTarget = (regs: RegExp[], _: string): boolean =>
+    !!(_ && regs.findIndex(_r => _r.test(_)) !== -1)
 
   const paths = await readDir(path)
-  if (!paths) {
-    console.error('Exception in fileForEach: paths!')
-
-    return false
-  }
 
   for (let i = 0; i < paths.length; i++) {
     const fullPath = path + '/' + paths[i]
     const stats = await stat(fullPath)
 
-    if (!stats) {
-      console.error('Exception in fileForEach: stats!')
-
-      return false
-    }
-
-    if (stats.isFile()) {
+    if (stats.isFile() && !isRegExpTarget(filterFile, fullPath)) {
       await callback(fullPath)
-    } else if (stats.isDirectory()) {
-      const recursive = await fileForEach(fullPath, callback)
-
-      if (!recursive) {
-        console.error('Exception in fileForEach: recursive!')
-
-        return false
-      }
+    } else if (stats.isDirectory() && !isRegExpTarget(filterDir, fullPath)) {
+      await fileForEach(fullPath, callback, filterDir, filterFile)
     }
   }
 
@@ -330,14 +225,12 @@ async function fileForEach(path: fs.PathLike, callback: (path: string) => any): 
  */
 async function readFile(
   path: fs.PathLike,
-  options: { encoding: string; flag?: string } = { encoding: 'utf8' }
-): Promise<string | false> {
-  return new Promise(resolve => {
+  options: { encoding?: BufferEncoding; flag?: string } = { encoding: 'utf-8' }
+): Promise<string | Buffer> {
+  return new Promise((resolve, reject) => {
     fs.readFile(path, options, (err, data) => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
       } else {
         resolve(data)
       }
@@ -353,13 +246,11 @@ async function writeFile(
   // eslint-disable-next-line
   data: any,
   option: fs.WriteFileOptions = 'utf8'
-): Promise<boolean> {
-  return new Promise(resolve => {
+): Promise<true> {
+  return new Promise((resolve, reject) => {
     fs.writeFile(path, data, option, err => {
       if (err) {
-        console.error(err)
-
-        resolve(false)
+        reject(err)
       } else {
         resolve(true)
       }
@@ -371,29 +262,14 @@ async function writeFile(
  * @description Traverse all folders.
  */
 // eslint-disable-next-line
-async function dirForEach(path: fs.PathLike, callback: (path: string) => any): Promise<boolean> {
-  if (!path || !callback) {
-    console.error('dirForEach: Missing parameters!')
-
-    return false
-  }
+async function dirForEach(path: fs.PathLike, callback: (path: string) => any): Promise<true> {
+  if (!path || !callback) throw new Error('dirForEach: Missing parameters!')
 
   const paths = await readDir(path)
-  if (!paths) {
-    console.error('Exception in dirForEach: paths!')
-
-    return false
-  }
 
   for (let i = 0; i < paths.length; i++) {
     const fullPath = path + '/' + paths[i]
     const stats = await stat(fullPath)
-
-    if (!stats) {
-      console.error('Exception in dirForEach: stats!')
-
-      return false
-    }
 
     if (stats.isDirectory()) await callback(fullPath)
   }
@@ -401,13 +277,22 @@ async function dirForEach(path: fs.PathLike, callback: (path: string) => any): P
   return true
 }
 
+async function isDir(path: string): Promise<boolean> {
+  const stats = await stat(path).catch(_ => false)
+  if (!stats) return false
+
+  return (stats as fs.Stats).isDirectory()
+}
+
 export {
   stat,
   mkDir,
+  isDir,
   access,
   copyDir,
   readDir,
   clearDir,
+  copyFile,
   emptyDir,
   readFile,
   writeFile,
