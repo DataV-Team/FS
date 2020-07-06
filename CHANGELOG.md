@@ -1,3 +1,9 @@
+# 0.1.1-alpha (2020-07-06)
+
+### Perfect
+
+- **Exception:** Throw exception normally.
+
 # 0.1.0-alpha (2020-05-01)
 
 ### typescript
